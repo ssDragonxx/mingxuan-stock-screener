@@ -5,6 +5,7 @@ import DataStatusBar from './DataStatusBar.vue'
 import ResultTable from './ResultTable.vue'
 import SensitivityChart from './SensitivityChart.vue'
 import { formatCount } from '../utils'
+import { buildResultCsv, downloadCsv } from '../csv'
 import type { StockResult } from '../types'
 
 const store = useScreeningStore()
@@ -56,11 +57,21 @@ function createMonitor() {
 }
 
 function exportCsv() {
-  store.toast('导出 CSV 将在下一版接入')
-}
-
-function backtest() {
-  store.toast('回测将在下一版接入；当前可先用监控任务每日检查')
+  const data = result.value
+  if (!data || !data.stocks.length) {
+    store.toast('没有可导出的结果')
+    return
+  }
+  const csv = buildResultCsv(data, store.parseResult?.field_meta || {})
+  const now = new Date()
+  const stamp = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, '0'),
+    String(now.getDate()).padStart(2, '0'),
+  ].join('')
+  const time = `${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`
+  downloadCsv(`明选筛选_${stamp}_${time}.csv`, csv)
+  store.toast(`已导出 ${data.stocks.length} 只股票`)
 }
 </script>
 
@@ -307,14 +318,11 @@ function backtest() {
 
       <div class="next-actions">
         <button class="btn btn-secondary" type="button" @click="exportCsv">导出 CSV</button>
-        <button class="btn btn-secondary" type="button" @click="backtest">
-          历史回测（P1）
-        </button>
         <button class="btn btn-secondary" type="button" @click="createMonitor">
           创建监控任务
         </button>
         <span class="muted" style="align-self: center">
-          监控任务每日 18:30 自动检查；回测在下一版接入。
+          监控任务每日 18:30 自动检查。
         </span>
       </div>
 

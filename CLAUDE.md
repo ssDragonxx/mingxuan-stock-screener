@@ -47,6 +47,7 @@ cd web && npm run build                # 产物在 web/dist，FastAPI 直接托�
 | `app/api/jobs.py` | 筛选任务 + 进度轮询 |
 | `app/monitor.py` | 策略保存 + 每日 18:30 监控 |
 | `web/src/stores/screening.ts` | 前端状态与动作 |
+| `web/src/csv.ts` | 筛选结果导出 CSV（全部四类 + 逐条件证据） |
 | `docs/API.md` | API 契约 |
 | `docs/AI_USAGE.md` | AI 使用与修正记录 |
 | `docs/TESTING.md` | 测试矩阵与已验证结果 |
@@ -84,8 +85,6 @@ Mock 预期（会随样本变化）：默认 query 3 组；`included=11, near=13
 
 ## 当前未完成
 
-- 回测（按钮占位；监控已实现）
-- 导出 CSV（占位）
 - 行业龙头/总市值（扶摇公开 API 暂无；规则解析标记不支持）
 - 用户体系/多用户权限
 - 高并发限流、每日监控长跑、2026Q3 披露回退（真实 Key 联调后仍需观察）
