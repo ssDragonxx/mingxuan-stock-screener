@@ -1,0 +1,18 @@
+[Unit]
+Description=Mingxuan natural-language stock screener
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/opt/mingxuan
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/opt/mingxuan/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1
+Restart=always
+RestartSec=3
+# 2C2G 保护，可按机器调整
+MemoryHigh=1500M
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+data/
+*.duckdb
+*.parquet
+.DS_Store
+web/node_modules/
+web/.vite/
+.pytest_cache/
+
+# 题目与内部方案，不进入仓库
+02_自然语言智能选股与策略解释器.md
+方案_自然语言智能选股与策略解释器.md
+
+# 内部架构图，不进入仓库
+diagrams/
